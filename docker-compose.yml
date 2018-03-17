@@ -1,0 +1,45 @@
+mysql:
+  image: mysql:latest
+  ports:
+    - "3500:3500"
+  volumes_from:
+    - dbdata
+  environment:
+    - MYSQL_ROOT_PASSWORD=test123
+    - MYSQL_DATABASE=openCity
+
+dbdata:
+  image: tianon/true
+  volumes:
+    - /var/lib/mysql
+
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: phpmyadmin_container
+  volumes:
+    - /sessions
+  ports:
+    - 8090:80
+  environment:
+    - PMA_ARBITRARY=1
+    - TESTSUITE_PASSWORD=test123
+    - MYSQL_ROOT_PASSWORD=test123
+  links:
+    - mysql:mysql
+
+app:
+  build: .
+  environment:
+    RAILS_ENV: development
+  ports:
+    - '3000:3000'
+  volumes_from:
+    - appdata
+  links:
+    - "mysql"
+
+appdata:
+  image: tianon/true
+  volumes:
+    - ".:/workspace"
