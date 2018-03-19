@@ -45,3 +45,6 @@ bower.json
 
 # Ignore temp file
 /tmp
+
+#Ignore log
+/log
