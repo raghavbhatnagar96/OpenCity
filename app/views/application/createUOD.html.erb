@@ -1,0 +1,11 @@
+<%= form_for (world, as: world, url: create_UOD_path(world), html: { method: :post }) do |f| %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title, autofocus: true, autocomplete: "title" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Create UOD" %>
+  </div>
+<% end %>

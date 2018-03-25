@@ -1,0 +1,11 @@
+<%= form_for(resource, as: resource_name, url: createUOD_path(resource_name), html: { method: :post }) do |f| %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :, autofocus: true, autocomplete: "title" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Create UOD" %>
+  </div>
+<% end %>

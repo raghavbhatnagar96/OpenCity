@@ -5,7 +5,7 @@ echo "1. New"
 echo "2. Existing"
 read choice
 
-if [$choice = "1"]; then
+if [ $choice -eq 1 ]; then
 	if docker-compose up -d; then
 		echo "Docker is UP"
 	else
@@ -13,7 +13,7 @@ if [$choice = "1"]; then
 		exit 1
 	fi
 	read -p "Enter Name of World: "  world
-	echo "Enter Password for database: "
+	echo "Enter Password for database (as entered in docker-compose.yml): "
 	read -s dbPassword
 	if docker exec -i opencity_mysql_1 mysql -u root -p$dbPassword  <<< "USE openCity;INSERT INTO worlds (Title, created_at, updated_at) VALUES ('$world', NOW(), NOW());"; then
 		echo "World Created"

@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   #     }
   #   end
   root 'home#index'
+  get 'home/createUOD' => 'application#createUOD'
+  post 'create_UOD' => 'application#create_UOD', :as => :create_UOD
 end
