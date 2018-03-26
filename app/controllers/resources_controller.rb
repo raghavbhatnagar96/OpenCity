@@ -1,5 +1,5 @@
 class ResourcesController < ApplicationController
-  #before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  before_action :set_resource, only: [:show, :edit, :update, :destroy]
   #the above came as a default of using scaffolding. 
   #But it can't be used, as set_resource extracts resource based on id, but the number of resources might be 0
   #If that's the case, then an error will be thrown if this is used.
@@ -64,7 +64,10 @@ class ResourcesController < ApplicationController
     end
   end
 
-  def my_resources
+  def user_resources
+    unless Resource.exists?
+      puts "adawdad"  
+    end
     @user = current_user
     @usr = @user[:id]
     @data = Resource.all

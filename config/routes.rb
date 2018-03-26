@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  #resources :resources
+  # resources :resources
   resources :worlds
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions"}
-  get 'resources/myResources' => 'resources#my_resources'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
+   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   # Some setup you must do manually if you haven't yet:
 
   # Ensure you have overridden routes for generated controllers in your routes.rb.
@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'home/createUOD' => 'application#createUOD'
   post 'create_UOD' => 'application#create_UOD', :as => :create_UOD
+  get 'resources/user_resources' => 'resources#user_resources', :as => :user_Resources
 end

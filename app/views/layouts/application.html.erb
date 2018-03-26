@@ -9,8 +9,9 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+     <!-- Favicon-->
     <title>OpenCity</title>
-    <!-- Favicon-->
+
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
@@ -25,7 +26,7 @@
 
 <body class="theme-red">
     <!-- Page Loader -->
-    <div class="page-loader-wrapper">
+    <!-- <div class="page-loader-wrapper">
         <div class="loader">
             <div class="preloader">
                 <div class="spinner-layer pl-red">
@@ -39,7 +40,7 @@
             </div>
             <p>Please wait...</p>
         </div>
-    </div>
+    </div> -->
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
@@ -307,14 +308,9 @@
                     </li>
                     <li>
                         <a href="pages/helper-classes.html">  
-                            <%= link_to '<i class="material-icons">books</i><span>My Resources</span>'.html_safe, resources_myResources_path() %>
+                            <%= link_to '<i class="material-icons">books</i><span>My Resources</span>'.html_safe, user_Resources_path() %>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="pages/helper-classes.html">  
-                            <%= link_to '<i class="material-icons">books</i><span>My Resources</span>'.html_safe, resources_myResources_path() %>
-                        </a>
-                    </li> -->
                 </ul>
             </div>
             <!-- #Menu -->
