@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :worlds
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions"}
-  get 'resources/myResources' => 'resources#my_resources'
   get 'resources/upload_resource' => 'resources#new'
   post 'resources/upload_resource' => 'resources#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -17,4 +16,7 @@ Rails.application.routes.draw do
   #       sessions: 'users/sessions'
   #     }
   #   end
+  get 'home/createUOD' => 'application#createUOD'
+  post 'create_UOD' => 'application#create_UOD', :as => :create_UOD
+  get 'resources/user_resources' => 'resources#user_resources', :as => :user_Resources
 end

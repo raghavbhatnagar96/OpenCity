@@ -1,0 +1,21 @@
+<div class="msg">Welcome! Please register the UOD</div>
+<%= form_for :world, :url => create_UOD_path do |f| %>
+ <div class="field">
+    <%= f.label :UOD_Title %><br />
+   
+  </div>
+
+ <div class="input-group">
+        <span class="input-group-addon">
+            <i class="material-icons">person</i>
+        </span>
+        <div class="form-line">
+        	 <%= f.text_field :title, autofocus: true, autocomplete: "title", class: "form-control", placeholder: "title" %>
+        </div>
+    </div>
+  
+
+  <div class="actions">
+    <%= f.submit "Create UOD", class: "btn btn-block btn-lg bg-pink waves-effect" %>
+  </div>
+<% end %>
