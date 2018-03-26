@@ -1,5 +1,8 @@
 class ResourcesController < ApplicationController
-  before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  #before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  #the above came as a default of using scaffolding. 
+  #But it can't be used, as set_resource extracts resource based on id, but the number of resources might be 0
+  #If that's the case, then an error will be thrown if this is used.
 
   # GET /resources
   # GET /resources.json
@@ -59,6 +62,12 @@ class ResourcesController < ApplicationController
       format.html { redirect_to resources_url, notice: 'Resource was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def my_resources
+    @user = current_user
+    @usr = @user[:id]
+    @data = Resource.all
   end
 
   private
