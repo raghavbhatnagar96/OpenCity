@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207024636) do
+ActiveRecord::Schema.define(version: 20180326152141) do
 
   create_table "resources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.date "date_published"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20180207024636) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.string "title", default: "", null: false
+    t.string "uploads"
     t.index ["user_id"], name: "index_resources_on_user_id"
   end
 

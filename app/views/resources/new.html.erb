@@ -1,5 +1,73 @@
-<h1>New Resource</h1>
+	<div class="container-fluid">
+            <div class="block-header">
+                <h2>DASHBOARD</h2>
+            </div>
 
-<%= render 'form', resource: @resource %>
+            <div class="row clearfix">
+                <!-- Task Info -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header">
+                            <h2>TASK INFOS</h2>
+                        </div>
+                      	<% if !@resource.errors.empty? %>
+  							<div class="alert alert-error">
+    						<ul>
+     					 	<% @resource.errors.full_messages.each do |msg| %>
+        						<li><%= msg %></li>
+      						<% end %>
+    						</ul>
+  							</div>
+						<% end %>
 
-<%= link_to 'Back', resources_path %>
+						<%= form_for @resource, :id => 'form_id', url: resources_upload_resource_path, html: { multipart: true } do |f| %>
+      
+						      <%= f.label :Title %>:
+						      <br><%= f.text_field :title %>
+
+						      <br>
+
+						      <br><%= f.label :Description %>:
+						      <br><%= f.text_area :description, cols: '40', rows: '5'%>
+
+						      <br>
+
+						      <br><%= f.label :Date_Published %>:
+						      <br><%= f.date_field :date_published, cols: '5', rows: '1' %>
+
+						      <br>
+
+						      <br><%= f.label :Attachment %>:
+						      <br><%= f.file_field :uploads %>
+						      <br><a><%= button_to 'Save', resources_upload_resource_path, :onclick => "$('form_id').submit()" %></a>
+						  <% end %>
+                    </div>
+                </div>
+                <!-- #END# Task Info -->
+                <!-- Browser Usage -->
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="header">
+                            <h2>BROWSER USAGE</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div id="donut_chart" class="dashboard-donut-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Browser Usage -->
+            </div>
+        </div>
+    </section>

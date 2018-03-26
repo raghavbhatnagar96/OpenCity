@@ -17,6 +17,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/new
   def new
+    @user = current_user
     @resource = Resource.new
   end
 
@@ -27,6 +28,7 @@ class ResourcesController < ApplicationController
   # POST /resources
   # POST /resources.json
   def create
+    @user = current_user
     @resource = Resource.new(resource_params)
 
     respond_to do |format|
