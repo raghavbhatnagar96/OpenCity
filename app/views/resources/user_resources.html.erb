@@ -36,16 +36,21 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            
                                             <%= @data.each do |dt| %>
                                             <td>1</td>
-                                            <td><%= @dt.title %></td>
+                                            <td><%= dt.title %></td>
                                             <td>Default</td>
-                                            <td><%= @dt.description %></td>
-                                            <td><%= @dt.date_published %></td> 
+                                            <td><%= dt.description %></td>
+                                            <td><%= dt.date_published %></td> 
                                             <td>Default</td>
-                                            <!-- <td><%= link_to "Download IP", @data.uploads_url %></td -->>
+                                          
+                                            <% end %>
                                         </tr>
-                                        <% end %>
+
+                                        
+                                       
+
                                     </tbody>
                                 </table>
                             </div>

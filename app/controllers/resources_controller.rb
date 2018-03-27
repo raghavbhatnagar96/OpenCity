@@ -68,12 +68,11 @@ class ResourcesController < ApplicationController
 
   def user_resources
     unless Resource.exists?
-      puts "adawdad"  
+      puts "adawdad"
     end
     @user = current_user
     @usr = @user[:id]
     @data = Resource.all
-    puts @data[1][:title]
   end
 
   private
