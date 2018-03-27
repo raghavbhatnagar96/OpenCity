@@ -30,7 +30,8 @@ class ResourcesController < ApplicationController
   def create
     @user = current_user
     @resource = Resource.new(resource_params)
-
+    @resource.user_id = @user.id
+    @resource.date_published = Date.today
     respond_to do |format|
       if @resource.save
         format.html { redirect_to :root, notice: 'Resource was successfully created.' }
@@ -68,11 +69,10 @@ class ResourcesController < ApplicationController
 
   def user_resources
     unless Resource.exists?
-      puts "adawdad"
+      redirect_to resources_upload_resource_path
     end
     @user = current_user
-    @usr = @user[:id]
-    @data = Resource.all
+    @data = Resource.where(:user_id => @user[:id])
   end
 
   private
@@ -83,6 +83,6 @@ class ResourcesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
-      params.require(:resource).permit(:date_published, :description, :title)
+        params.require(:resource).permit(:description, :title)
     end
 end
