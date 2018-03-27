@@ -35,17 +35,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <%= @data.each do |dt| %>
-                                            <td>1</td>
-                                            <td><%= @dt.title %></td>
-                                            <td>Default</td>
-                                            <td><%= @dt.description %></td>
-                                            <td><%= @dt.date_published %></td> 
-                                            <td>Default</td>
-                                            <!-- <td><%= link_to "Download IP", @data.uploads_url %></td -->>
+                                        <% @data.each do |dt| %>
+                                        <tr>                          
+                                            <td><%= dt.id %></td>
+                                            <td><%= dt.title %></td>
+                                            <td><%= dt.description %></td>
+                                            <td><%= dt.date_published %></td>
+                                            <td><%= dt.date_published %></td> 
+                                            <td>Default</td>   
                                         </tr>
                                         <% end %>
+                                        
+                                       
+
                                     </tbody>
                                 </table>
                             </div>

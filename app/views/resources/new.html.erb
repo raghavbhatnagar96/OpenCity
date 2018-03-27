@@ -1,49 +1,46 @@
 	<div class="container-fluid">
-            <div class="block-header">
-                <h2>DASHBOARD</h2>
-            </div>
+      <div class="block-header">
+          <h2>Upload Resource</h2>
+      </div>
 
-            <div class="row clearfix">
-                <!-- Task Info -->
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                    <div class="card">
-                        <div class="header">
-                            <h2>TASK INFOS</h2>
-                        </div>
-                      	<% if !@resource.errors.empty? %>
-  							<div class="alert alert-error">
+      <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <div class="card">
+            <div class="header">
+                <h2>Upload Resource</h2>
+            </div>
+          	<% if !@resource.errors.empty? %>
+		         <div class="alert alert-error">
     						<ul>
      					 	<% @resource.errors.full_messages.each do |msg| %>
         						<li><%= msg %></li>
       						<% end %>
     						</ul>
-  							</div>
-						<% end %>
+		         </div>
+            <% end %>
+						
+            <div style="padding: 2%">
+            <%= form_for @resource, :id => 'form_id', url: resources_upload_resource_path, html: { multipart: true } do |f| %>
+                  <br>
+						      <div class="field">
+                  <%= f.label :Title %>:
+						      <%= f.text_field :title,  autofocus: true, class: "form-control"%>
+                  </div>
 
-						<%= form_for @resource, :id => 'form_id', url: resources_upload_resource_path, html: { multipart: true } do |f| %>
-      
-						      <%= f.label :Title %>:
-						      <br><%= f.text_field :title %>
-
-						      <br>
-
+                  <div class="field">
 						      <br><%= f.label :Description %>:
-						      <br><%= f.text_area :description, cols: '40', rows: '5'%>
-
-						      <br>
-
-						      <br><%= f.label :Date_Published %>:
-						      <br><%= f.date_field :date_published, cols: '5', rows: '1' %>
-
-						      <br>
-
+                  <%= f.text_area :description, cols: '40', rows: '5',class: "form-control"%>
+                  </div>
+                  
+                  <div class="field">
 						      <br><%= f.label :Attachment %>:
-						      <br><%= f.file_field :uploads %>
-						      <br><a><%= button_to 'Save', resources_upload_resource_path, :onclick => "$('form_id').submit()" %></a>
+						      <%= f.file_field :uploads %>
+                  </div>
+						      <br><a><%= button_to 'Save', resources_upload_resource_path, :onclick => "$('form_id').submit()", class: "btn btn-block btn-lg bg-pink waves-effect"%></a>
 						  <% end %>
-                    </div>
-                </div>
-                <!-- #END# Task Info -->       
-            </div>
-        </div>
-    </section>
+              </div>
+          </div>
+        </div>    
+      </div>
+  </div>
+</section>
