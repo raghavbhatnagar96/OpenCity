@@ -35,19 +35,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            
-                                            <%= @data.each do |dt| %>
-                                            <td>1</td>
+                                        <% @data.each do |dt| %>
+                                        <tr>                          
+                                            <td><%= dt.id %></td>
                                             <td><%= dt.title %></td>
                                             <td>Default</td>
                                             <td><%= dt.description %></td>
                                             <td><%= dt.date_published %></td> 
-                                            <td>Default</td>
-                                          
-                                            <% end %>
+                                            <td>Default</td>   
                                         </tr>
-
+                                        <% end %>
                                         
                                        
 
