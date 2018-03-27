@@ -24,17 +24,17 @@
                   <br>
 						      <div class="field">
                   <%= f.label :Title %>:
-						      <%= f.text_field :title,  autofocus: true, class: "form-control"%>
+						      <%= f.text_field :title,  autofocus: true, class: "form-control", :required => true %>
                   </div>
 
                   <div class="field">
 						      <br><%= f.label :Description %>:
-                  <%= f.text_area :description, cols: '40', rows: '5',class: "form-control"%>
+                  <%= f.text_area :description, cols: '40', rows: '5',class: "form-control", :required => true %>
                   </div>
                   
                   <div class="field">
 						      <br><%= f.label :Attachment %>:
-						      <%= f.file_field :uploads %>
+						      <%= f.file_field :uploads, :required => true %>
                   </div>
 						      <br><a><%= button_to 'Save', resources_upload_resource_path, :onclick => "$('form_id').submit()", class: "btn btn-block btn-lg bg-pink waves-effect"%></a>
 						  <% end %>
