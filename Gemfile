@@ -40,7 +40,6 @@ gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'carrierwave', '~> 1.0'
 gem 'mime-types-data', '~> 3.2016.0521'
-gem 'json', '~> 2.1.0' 
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
