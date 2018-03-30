@@ -75,6 +75,11 @@ class ResourcesController < ApplicationController
     @data = Resource.where(:user_id => @user[:id])
   end
 
+  def view_resource
+    @user = current_user
+    @resource = Resource.find(params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource
@@ -83,6 +88,6 @@ class ResourcesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
-        params.require(:resource).permit(:description, :title)
+        params.require(:resource).permit(:description, :title, :date_published, :uploads)
     end
 end

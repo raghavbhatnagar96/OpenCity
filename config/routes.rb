@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   get 'home/createUOD' => 'application#createUOD'
   post 'create_UOD' => 'application#create_UOD', :as => :create_UOD
   get 'resources/user_resources' => 'resources#user_resources', :as => :user_Resources
+  get 'resources/view_resource/:id' => 'resources#view_resource', :as => :view_Resource
 end
