@@ -26,7 +26,8 @@
             <label><%= @resource.description %></label></br>
             <label><b> Date Published: </b></label>
             <label><%= @resource.date_published %></label></br>
-            
+            <label><b> File: </b></label>
+            <label><%= link_to "Download", @resource.uploads_url %></label></br>     
    </div>
           </div
         </div>    
