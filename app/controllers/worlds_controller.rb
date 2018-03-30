@@ -25,7 +25,8 @@ class WorldsController < ApplicationController
   # POST /worlds.json
   def create
     @world = World.new(world_params)
-
+    @world.role_table={current_user[:id]: "admin"}
+    @world.privilege_table={"admin": "ALL"}
     respond_to do |format|
       if @world.save
         format.html { redirect_to @world, notice: 'World was successfully created.' }
