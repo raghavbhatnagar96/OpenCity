@@ -1,3 +1,45 @@
+	<div class="container-fluid">
+      <div class="block-header">
+          <h2>Create World</h2>
+      </div>
+
+      <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <div class="card">
+            <div class="header">
+                <h2>Create World</h2>
+            </div>
+          	<% if !@world.errors.empty? %>
+		         <div class="alert alert-error">
+    						<ul>
+     					 	<% @world.errors.full_messages.each do |msg| %>
+        						<li><%= msg %></li>
+      						<% end %>
+    						</ul>
+		         </div>
+            <% end %>
+						
+            <div style="padding: 2%">
+            <%= form_for @world, :id => 'form_id', url: create_world_path, html: { multipart: true } do |f| %>
+                  <br>
+						      <div class="field">
+                  <%= f.label :Title %>:
+						      <%= f.text_field :title,  autofocus: true, class: "form-control", :required => true %>
+                  </div>                  
+						      <br><a><%= button_to 'Save', create_world_path, :onclick => "$('form_id').submit()", class: "btn btn-block btn-lg bg-pink waves-effect"%></a>
+						  <% end %>
+              </div>
+          </div>
+        </div>    
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
 <h1>New World</h1>
 
 <%= render 'form', world: @world %>

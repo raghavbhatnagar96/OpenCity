@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326152141) do
+ActiveRecord::Schema.define(version: 20180330152854) do
 
   create_table "resources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.date "date_published"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20180326152141) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "role_table"
+    t.json "role_table", null: false
     t.json "privilege_table"
   end
 

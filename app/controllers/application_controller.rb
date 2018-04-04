@@ -7,8 +7,10 @@ class ApplicationController < ActionController::Base
   def create_UOD
     unless World.exists?
       @world = World.new()
-      @world.role_table={1 : "admin"}
-      @world.privilege_table={"admin": "ALL"}
+      data = {1 => "admin"}
+      @world.role_table=data.to_json
+      data1 = {"admin" => "ALL"}
+      @world.privilege_table = data1.to_json
       @world1 = params[:world]
       @world[:title] = @world1[:title]
       respond_to do |format|
