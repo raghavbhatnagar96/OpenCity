@@ -294,7 +294,10 @@
                             <%= link_to '<i class="material-icons">home</i><span>Home</span>'.html_safe, root_path() %>
                     </li>
                     <li> 
-                            <%= link_to '<i class="material-icons">books</i><span>My Resources</span>'.html_safe, user_Resources_path() %>
+                            <%= link_to '<i class="material-icons">book</i><span>My Resources</span>'.html_safe, user_Resources_path() %>
+                    </li>
+                    <li>
+                            <%= link_to '<i class="material-icons">picture_in_picture</i><span>My Worlds</span>'.html_safe, my_worlds_path() %>
                     </li>
                     <li>
                         <!-- <a href="pages/helper-classes.html">   -->
@@ -303,9 +306,6 @@
                     </li>
                     <li>
                             <%= link_to '<i class="material-icons">create_new_folder</i><span>Create New World</span>'.html_safe, new_world_path() %>
-                    </li>
-                    <li>
-                            <%= link_to '<i class="material-icons">picture_in_picture</i><span>My Worlds</span>'.html_safe, my_worlds_path() %>
                     </li>
                 </ul>
             </div>
