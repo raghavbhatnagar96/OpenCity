@@ -3,6 +3,27 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   layout "auth"
 
+  def create_user_world
+    if user_signed_in?  
+      @user = current_user
+      @world = World.new()
+      @world.title=current_user[:email]
+      data = {current_user[:id]=> "admin"}
+      @world.role_table = data.to_json
+      data2 = {"admin"=> "ALL"}
+      @world.privilege_table = data2.to_json
+      @world.save
+    else
+      return
+    end
+  end
+
+  # POST /resource
+  # def create
+  #   super
+  # end
+
+
   private
 
   def sign_up_params
@@ -20,10 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+
 
   # GET /resource/edit
   # def edit
@@ -49,7 +67,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
@@ -62,9 +80,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    create_user_world
+    super(resource)
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
