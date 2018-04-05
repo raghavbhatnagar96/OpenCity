@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions"}
   get 'resources/upload_resource' => 'resources#new'
   post 'resources/upload_resource' => 'resources#create'
-  # post 'worlds/create_world' => 'worlds#create', :as =>:create_world
+  post 'worlds/create_world' => 'worlds#create', :as =>:create_world
+  get 'my_worlds' => 'worlds#my_worlds'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   # Some setup you must do manually if you haven't yet:
 

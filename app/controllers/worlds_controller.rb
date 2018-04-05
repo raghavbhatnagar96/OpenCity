@@ -1,5 +1,5 @@
 class WorldsController < ApplicationController
-  before_action :set_world, only: [:show, :edit, :update, :destroy]
+  before_action :set_world, only:[:show, :edit, :update, :destroy]
 
   # GET /worlds
   # GET /worlds.json
@@ -10,8 +10,14 @@ class WorldsController < ApplicationController
 
   # GET /worlds/1
   # GET /worlds/1.json
+  # how to parse json please refer to this
   def show
     @user = current_user
+    @data = JSON(@world.role_table)
+    @data.each do |user_id, role|
+      puts user_id
+      puts role
+    end
   end
 
   # GET /worlds/new
@@ -24,6 +30,25 @@ class WorldsController < ApplicationController
   def edit
     @user = current_user
   end
+
+  # view only my worlds NEED to be optimized
+  def my_worlds
+    @user = current_user
+    @worlds = World.all
+    # puts @worlds
+    @myWorlds = []
+    @worlds.each do |world|
+      # puts world
+      data = JSON(world.role_table)
+      # puts data
+      data.each do |user_id, role|
+        if user_id.to_i == current_user[:id]
+          @myWorlds.append(world)
+        end
+      end
+    end
+  end
+
 
   # POST /worlds
   # POST /worlds.json
