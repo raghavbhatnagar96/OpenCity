@@ -58,16 +58,3 @@
 
 
 
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <% @myWorlds.each do |world| %>
-  	<% data = JSON(world.role_table) %>
-  	<% data.each do |user_id, role| %>
-  		<%= world.title %>
-  		<%= role %>
-  	<% end %>
-  <% end %>
-</p>
-

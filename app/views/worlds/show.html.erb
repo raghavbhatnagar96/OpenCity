@@ -1,9 +1,38 @@
-<p id="notice"><%= notice %></p>
+	<div class="container-fluid">
+      <div class="block-header">
+          <h2>Viewing World</h2>
+      </div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @world.title %>
-</p>
+      <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <div class="card">
+            <div class="header">
+                <h2>Your World</h2>
+            </div>
+          	<% if !@world.errors.empty? %>
+		         <div class="alert alert-error">
+    						<ul>
+     					 	<% @world.errors.full_messages.each do |msg| %>
+        						<li><%= msg %></li>
+      						<% end %>
+    						</ul>
+		         </div>
+            <% end %>
+						
+            <div style="padding: 2%">
+            <label><b> Title: </b></label>
+            <label><%= @world.title %></label></br>
+            <label><b> Created on: </b></label>
+            <label><%= @world.created_at %></label></br>
+			<label><%= link_to 'Edit', edit_world_path(@world) %></label></br>
+			<label><%= link_to 'Back', my_worlds_path %></label>
+   			</div>
+          </div
+        </div>    
+      </div>
+  </div>
+</section>
 
-<%= link_to 'Edit', edit_world_path(@world) %> |
-<%= link_to 'Back', worlds_path %>
+
+
+
