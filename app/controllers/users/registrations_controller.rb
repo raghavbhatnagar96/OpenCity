@@ -12,7 +12,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @world.role_table = data.to_json
       data2 = {"admin"=> "ALL"}
       @world.privilege_table = data2.to_json
-      @world.save
+      if @world.save
+        invoke("User created: " + @user[:email], @user[:email], "admin", 1)
+      else
+      end
     else
       return
     end

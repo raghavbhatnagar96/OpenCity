@@ -1,0 +1,108 @@
+    <div class="container-fluid">
+            <div class="block-header">
+                <h2>World Settings</h2>
+            </div>
+
+            <div class="row clearfix">
+                <!-- Table -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Welcome Admin, World Title: <%= @world.title %></h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-hover dashboard-task-infos">
+                                    <thead>
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>User EmailID</th>
+                                            <th>User Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+	                                        <% data = JSON(@world.role_table) %>
+                                            <% data.each do |user_id, role| %>
+                                            <tr> <%each= User.find(user_id) %>
+                                                <td><%= each.first_name %> <%= each.last_name %></td>                  
+	                                            <td><%= each.email %></td>
+	                                            <td><%= role %></td>
+	                                        </tr> 
+                                            <%end%>  
+                                        
+                                       
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Table -->
+
+                <!-- Table -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Welcome Admin, World Users:</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-hover dashboard-task-infos">
+                                    <thead>
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>User EmailID</th>
+                                            <th>User Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <% data = JSON(@world.role_table) %>
+                                            <% data.each do |user_id, role| %>
+                                            <tr> <%each= User.find(user_id) %>
+                                                <td><%= each.first_name %> <%= each.last_name %></td>                  
+                                                <td><%= each.email %></td>
+                                                <td><%= role %></td>
+                                            </tr> 
+                                            <%end%>  
+                                        
+                                       
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Table -->
+
+
+        </div>
+    </section>
+
+
+

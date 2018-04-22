@@ -30,6 +30,7 @@
                                             <th>World Title</th>
                                             <th>User Role</th>
                                             <th>World created on</th>
+                                            <th>Visit World</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,6 +41,7 @@
 	                                            <td><%= world.title %></td>
 	                                            <td><%= role %></td>
 	                                            <td><%= world.created_at %></td>
+                                                <td><%= link_to(world.title, world_path(world.id)) %></td>
 	                                        </tr>
 	                                    	<% end %>    
                                         <% end %>

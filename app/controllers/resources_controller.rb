@@ -30,10 +30,14 @@ class ResourcesController < ApplicationController
   def create
     @user = current_user
     @resource = Resource.new(resource_params)
+    @myWorld = World.where(:title => @user[:email])
+    worldID = @myWorld[0].id
     @resource.user_id = @user.id
     @resource.date_published = Date.today
     respond_to do |format|
       if @resource.save
+        invoke("Resource created: " + @resource.title, @user[:email], "admin", worldID)
+        # puts("Resource created: " + @resource.title, @user[:email], "admin", worldID)
         format.html { redirect_to :root, notice: 'Resource was successfully created.' }
         format.json { render :show, status: :created, location: @resource }
       else
@@ -48,6 +52,9 @@ class ResourcesController < ApplicationController
   def update
     respond_to do |format|
       if @resource.update(resource_params)
+        @myWorld = World.where(:title => @user[:email])
+        worldID = @myWorld[0].id
+        invoke("Resource destroyed: " + @resource.title, @user[:email], "admin", worldID)
         format.html { redirect_to :root, notice: 'Resource was successfully updated.' }
         format.json { render :show, status: :ok, location: @resource }
       else
@@ -61,6 +68,9 @@ class ResourcesController < ApplicationController
   # DELETE /resources/1.json
   def destroy
     @resource.destroy
+    @myWorld = World.where(:title => @user[:email])
+    worldID = @myWorld[0].id
+    invoke("Resource destroyed: " + @resource.title, @user[:email], "admin", worldID)
     respond_to do |format|
       format.html { redirect_to resources_url, notice: 'Resource was successfully destroyed.' }
       format.json { head :no_content }
@@ -83,6 +93,7 @@ class ResourcesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource
+      @user = current_user
       @resource = Resource.find(params[:id])
     end
 

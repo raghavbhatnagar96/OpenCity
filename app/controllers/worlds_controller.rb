@@ -56,18 +56,18 @@ class WorldsController < ApplicationController
     @user = current_user
     @world = World.new(world_params)
     # puts @user[:email]
-    @myWorld = World.where(:title => @user[:email]) 
     #takes @myWorld as a list of all worlds satisfying where clause
-    puts @myWorld[0].title
-    data = {current_user[:id]=> "admin"}
+    # puts @myWorld[0].title
+    @myWorld = World.where(:title => @user[:email])
+    worldID = @myWorld[0].id 
+    data = {worldID=> "admin"}
     @world.role_table = data.to_json
     data2 = {"admin"=> "ALL"}
     @world.privilege_table = data2.to_json
     email = @user[:email]
-    worldID = @myWorld[0].id 
     respond_to do |format|
-      if @world.save
-        invoke("Create World" + @world.title, email, "admin", worldID)
+      if @world.save 
+        invoke("Create World: " + @world.title, email, "admin", worldID)
         format.html { redirect_to @world, notice: 'World was successfully created.' }
         format.json { render :show, status: :created, location: @world }
       else
@@ -95,13 +95,26 @@ class WorldsController < ApplicationController
   # DELETE /worlds/1
   # DELETE /worlds/1.json
   def destroy
-    @user = current_users
+    @user = current_user
     @world.destroy
     respond_to do |format|
       format.html { redirect_to worlds_url, notice: 'World was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
+
+
+  #World Settings
+  def world_settings
+    @user=current_user
+    myWorld = World.where(:title => @user[:email])
+    myWorld = myWorld[0]
+    @world = World.find(params[:id])
+    data = JSON(@world.role_table)
+    # puts myWorld.id-1
+    puts data[myWorld.id.to_s]
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

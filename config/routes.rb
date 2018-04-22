@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   #       sessions: 'users/sessions'
   #     }
   #   end
+  get 'world/settings/' => 'worlds#world_settings', :as => :world_settings
   get 'home/createUOD' => 'application#createUOD'
   post 'create_UOD' => 'application#create_UOD', :as => :create_UOD
   get 'resources/user_resources' => 'resources#user_resources', :as => :user_Resources

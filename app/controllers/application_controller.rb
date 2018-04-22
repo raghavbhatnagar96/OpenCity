@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def create_UOD
     unless World.exists?
       @world = World.new()
-      data = {1 => "admin"}
+      data = {2 => "admin"}
       @world.role_table=data.to_json
       data1 = {"admin" => "ALL"}
       @world.privilege_table = data1.to_json
@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
       @world[:title] = @world1[:title]
       respond_to do |format|
         if @world.save
+          invoke("Create UOD: " + @world1[:title], "adminEmail", "admin", 1)
           format.html { redirect_to :root, notice: 'World was successfully created.' }
           format.json { render :show, status: :created, location: @world }
         else
