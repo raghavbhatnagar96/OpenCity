@@ -25,6 +25,48 @@ class ApplicationController < ActionController::Base
     end
   end
  
+ def invoke(action, email, role, worldID)
+      uri = URI('http://139.59.89.51:443/submitLog')
+
+          http = Net::HTTP.new(uri.host, uri.port)
+          req = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json', 'Authorization' => 'XXXXXXXXXXXXXXXX'})
+          
+          time = Time.now.inspect
+          obj = {:worldID => worldID, :email => email, :role => "admin", :action => action, :timestamp => time}      
+          req.body = JSON.generate(obj)
+          res = http.request(req)
+
+          puts "post response --------- #{res.body}"
+
+        rescue => e
+          puts "failed #{e}"
+    end
+
+
+  def logs
+    queryUser = params[:queryUser]
+    if(queryUser != nil)
+      puts "queryUser name --------- "+queryUser 
+      query(queryUser)
+    end
+  end
+
+
+  def query(queryUser)
+      domain_uri = 'http://139.59.89.51:443/submitUsername/'+queryUser
+        
+          uri = URI(domain_uri)
+          req = Net::HTTP::Get.new(uri)
+
+          res = Net::HTTP.start(uri.host, uri.port) {|http|
+          http.request(req)}
+
+          $dataList = JSON.parse(res.body)["result"]["data"]
+          puts "get response --------- #{res.body}"
+
+        rescue => e
+          puts "failed #{e}"
+  end
 
   private
   def first_user

@@ -55,12 +55,19 @@ class WorldsController < ApplicationController
   def create
     @user = current_user
     @world = World.new(world_params)
+    # puts @user[:email]
+    @myWorld = World.where(:title => @user[:email]) 
+    #takes @myWorld as a list of all worlds satisfying where clause
+    puts @myWorld[0].title
     data = {current_user[:id]=> "admin"}
     @world.role_table = data.to_json
     data2 = {"admin"=> "ALL"}
     @world.privilege_table = data2.to_json
+    email = @user[:email]
+    worldID = @myWorld[0].id 
     respond_to do |format|
       if @world.save
+        invoke("Create World" + @world.title, email, "admin", worldID)
         format.html { redirect_to @world, notice: 'World was successfully created.' }
         format.json { render :show, status: :created, location: @world }
       else
