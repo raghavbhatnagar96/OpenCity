@@ -1,6 +1,22 @@
-<h1>Editing World</h1>
+	<div class="container-fluid">
+      <div class="block-header">
+          <h2>Edit World</h2>
+      </div>
 
-<%= render 'form', world: @world %>
+      <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <div class="card">
+            <div class="header">
+                <h2>Edit world</h2>
+            </div>
+          	
+						
+            <div style="padding: 2%">
+            <%= render 'form', world: @world %>    
+   </div>
+          </div
+        </div>    
+      </div>
+  </div>
+</section>
 
-<%= link_to 'Show', @world %> |
-<%= link_to 'Back', worlds_path %>

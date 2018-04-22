@@ -1,3 +1,42 @@
+	<div class="container-fluid">
+      <div class="block-header">
+          <h2>Viewing Resource</h2>
+      </div>
+
+      <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+          <div class="card">
+            <div class="header">
+                <h2>Your Resource</h2>
+            </div>
+          	<% if !@resource.errors.empty? %>
+		         <div class="alert alert-error">
+    						<ul>
+     					 	<% @resource.errors.full_messages.each do |msg| %>
+        						<li><%= msg %></li>
+      						<% end %>
+    						</ul>
+		         </div>
+            <% end %>
+						
+            <div style="padding: 2%">
+            <label><b> Title: </b></label>
+            <label><%= @resource.title %></label></br>
+            <label><b> Description: </b></label>
+            <label><%= @resource.description %></label></br>
+            <label><b> Date Published: </b></label>
+            <label><%= @resource.date_published %></label></br>
+            <label><b> File: </b></label>
+            <label><%= link_to "Download", @resource.uploads_url %></label></br>     
+   </div>
+          </div
+        </div>    
+      </div>
+  </div>
+</section>
+
+
+
 <p id="notice"><%= notice %></p>
 
 <p>
