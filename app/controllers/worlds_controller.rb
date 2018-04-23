@@ -1,6 +1,6 @@
 class WorldsController < ApplicationController
   before_action :set_world, only:[:show, :edit, :update, :destroy]
-
+  layout "world_admin", :only => [:admin_world_settings]
   # GET /worlds
   # GET /worlds.json
   def index
@@ -114,8 +114,26 @@ class WorldsController < ApplicationController
     myWorld = myWorld[0]
     @world = World.find(params[:id])
     data = JSON(@world.role_table)
+    my_role = data[myWorld.id.to_s]
     # puts myWorld.id-1
-    puts data[myWorld.id.to_s]
+    # puts data[myWorld.id.to_s]
+    if(my_role == "admin")
+      redirect_to admin_world_settings_path(request.parameters)
+    end
+  end
+
+  def admin_world_settings
+    @user=current_user
+    myWorld = World.where(:title => @user[:email])
+    myWorld = myWorld[0]
+    @world = World.find(params[:id])
+    data = JSON(@world.role_table)
+    my_role = data[myWorld.id.to_s]
+    # puts myWorld.id-1
+    # puts data[myWorld.id.to_s]
+    if(my_role != "admin")
+      redirect_to root_path
+    end
   end
 
 
