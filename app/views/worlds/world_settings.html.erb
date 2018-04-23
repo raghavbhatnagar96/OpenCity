@@ -34,8 +34,10 @@
                                     </thead>
                                     <tbody>
 	                                        <% data = JSON(@world.role_table) %>
-                                            <% data.each do |user_id, role| %>
-                                            <tr> <%each= User.find(user_id) %>
+                                            <% data.each do |world_id, role| %>
+                                            <tr> 
+                                            <%thisworld=World.find(world_id)%>
+                                            <% each= User.find_by(:email => thisworld.title) %>
                                                 <td><%= each.first_name %> <%= each.last_name %></td>                  
 	                                            <td><%= each.email %></td>
 	                                            <td><%= role %></td>
@@ -82,16 +84,15 @@
                                     </thead>
                                     <tbody>
                                             <% data = JSON(@world.role_table) %>
-                                            <% data.each do |user_id, role| %>
-                                            <tr> <%each= User.find(user_id) %>
+                                            <% data.each do |world_id, role| %>
+                                            <tr> 
+                                            <%thisworld=World.find(world_id)%>
+                                            <% each= User.find_by(:email => thisworld.title) %>
                                                 <td><%= each.first_name %> <%= each.last_name %></td>                  
                                                 <td><%= each.email %></td>
                                                 <td><%= role %></td>
                                             </tr> 
                                             <%end%>  
-                                        
-                                       
-
                                     </tbody>
                                 </table>
                             </div>

@@ -8,7 +8,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @user = current_user
       @world = World.new()
       @world.title=current_user[:email]
-      data = {current_user[:id]=> "admin"}
+      lastworld = World.last
+      lastworld = lastworld.id + 1
+      data = {lastworld=> "admin"}
       @world.role_table = data.to_json
       data2 = {"admin"=> "ALL"}
       @world.privilege_table = data2.to_json

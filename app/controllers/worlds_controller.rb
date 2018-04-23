@@ -36,13 +36,16 @@ class WorldsController < ApplicationController
     @user = current_user
     @worlds = World.all
     # puts @worlds
+    myWorld = World.where(:title => @user[:email])
+    worldID = myWorld[0].id
+    # puts worldID
     @myWorlds = []
     @worlds.each do |world|
       # puts world
       data = JSON(world.role_table)
       # puts data
-      data.each do |user_id, role|
-        if user_id.to_i == current_user[:id]
+      data.each do |world_id, role|
+        if world_id.to_i == worldID.to_i
           @myWorlds.append(world)
         end
       end
