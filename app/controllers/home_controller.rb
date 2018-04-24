@@ -23,5 +23,22 @@ class HomeController < ApplicationController
 	    #   @noResource = "You have not added any resources yet"
 	    # end
 	    @resource_data = Resource.where(:user_id => @user[:id])	
-		end
+	end
+
+	def view_logs
+		@user = current_user
+		uod = World.find(1)
+		myWorld = World.where(:title => @user[:email])
+		myWorld = myWorld[0]
+	    data = JSON(uod.role_table)
+	    my_role = data[myWorld.id.to_s]
+	    if my_role == "admin"
+	    	puts "1"
+	    else
+	    	redirect_to root_path
+	    end
+
+	  end
+
+
 end

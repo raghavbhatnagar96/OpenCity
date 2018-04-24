@@ -1,6 +1,10 @@
 class WorldsController < ApplicationController
   before_action :set_world, only:[:show, :edit, :update, :destroy]
-  layout "world_admin", :only => [:admin_world_settings]
+  before_action :set_world_role, only:[:world_settings, :admin_world_settings, :add_remove_role, :add_role, :remove_role]
+  layout "world_admin", :only => [:admin_world_settings, :add_remove_role, :add_role]
+
+  #use set_world_role before all actions where role of user in world is important
+  
   # GET /worlds
   # GET /worlds.json
   def index
@@ -106,34 +110,74 @@ class WorldsController < ApplicationController
     end
   end
 
-
-  #World Settings
-  def world_settings
-    @user=current_user
-    myWorld = World.where(:title => @user[:email])
-    myWorld = myWorld[0]
-    @world = World.find(params[:id])
+  def add_remove_role
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    worlds = World.all
+    @world_titles = []
     data = JSON(@world.role_table)
-    my_role = data[myWorld.id.to_s]
-    # puts myWorld.id-1
-    # puts data[myWorld.id.to_s]
-    if(my_role == "admin")
-      redirect_to admin_world_settings_path(request.parameters)
+    # puts data["2"]
+    worlds.each do |thisWorld|
+      if !data[thisWorld.id.to_s]
+        @world_titles.append(thisWorld.title)
+      end
+    end
+    p_table = JSON(@world.privilege_table)
+    @privileges = ["ALL", "WRITE", "EDIT", "READ"]
+    @roles = []
+    p_table.each do |role, privilege|
+        @roles.append(role)
+    end
+    # puts @roles
+  end
+
+  def add_role
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    data = JSON(@world.privilege_table)
+    data[params[:role]] = params[:privilege]
+    if @world.update(:privilege_table => data.to_json)
+      redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+    else
+      redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
     end
   end
 
-  def admin_world_settings
-    @user=current_user
-    myWorld = World.where(:title => @user[:email])
-    myWorld = myWorld[0]
-    @world = World.find(params[:id])
-    data = JSON(@world.role_table)
-    my_role = data[myWorld.id.to_s]
-    # puts myWorld.id-1
-    # puts data[myWorld.id.to_s]
-    if(my_role != "admin")
+  def remove_role
+    @user = current_user
+    if(@my_role != "admin")
       redirect_to root_path
     end
+  end
+
+
+  #World Settings for non admin
+  def world_settings
+    @user=current_user
+    # set_world_role
+    puts @my_role
+    if(@my_role == "admin")
+      redirect_to admin_world_settings_path(request.parameters)  
+    else
+      # Normal User thingie
+    end
+  end
+
+
+  #world Admin Settings
+  def admin_world_settings
+    @user=current_user
+    # p_table.each do |role, privilege|
+    #     @roles.append(role)
+    # end
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    @p_table = JSON(@world.privilege_table)
   end
 
 
@@ -141,6 +185,16 @@ class WorldsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_world
       @world = World.find(params[:id])
+    end
+
+    #used to get role of user in world
+    def set_world_role
+      @user=current_user
+      myWorld = World.where(:title => @user[:email])
+      myWorld = myWorld[0]
+      @world = World.find(params[:id])
+      data = JSON(@world.role_table)
+      @my_role = data[myWorld.id.to_s]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

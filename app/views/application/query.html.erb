@@ -1,6 +1,6 @@
     <div class="container-fluid">
             <div class="block-header">
-                <h2>World Settings</h2>
+                <h2>Worlds</h2>
             </div>
 
             <div class="row clearfix">
@@ -8,7 +8,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                     <div class="card">
                         <div class="header">
-                            <h2>Welcome User, World Title: <%= @world.title %></h2>
+                            <h2>Worlds I am connected to</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -26,21 +26,23 @@
                             <div class="table-responsive">
                                 <table class="table table-hover dashboard-task-infos">
                                     <thead>
-                                        <tr>
-                                            <th>World Title</th>
-                                            <th>World Role</th>
-                                        </tr>
-                                    </thead>
+                                                <tr>
+                                                    <th>Timestamp</th>
+                                                    <th>WorldID</th>
+                                                    <th>Role</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
                                     <tbody>
-	                                        <% data = JSON(@world.role_table) %>
-                                            <% data.each do |world_id, role| %>
-                                            <tr> 
-                                            <%thisworld=World.find(world_id)%>
-                                            <% each= User.find_by(:email => thisworld.title) %>
-                                                <td><td><%= thisworld.title %></td></td>
-	                                            <td><%= role %></td>
-	                                        </tr> 
-                                            <%end%>  
+                                         <% $dataList.each do |data| %>
+	                                        <tr>                          
+	                                           <td><%= data["Timestamp"] %></td>
+                                                <td><%= data["WorldID"] %></td>
+                                                <td><%= data["Role"] %></td>
+                                                <td><%= data["Action"] %></td>
+	                                        </tr>
+	                                    	<% end %>    
+                                        <% end %>
                                         
                                        
 
@@ -51,10 +53,6 @@
                     </div>
                 </div>
                 <!-- #END# Table -->
-
-               
-
-
         </div>
     </section>
 

@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   #       sessions: 'users/sessions'
   #     }
   #   end
+  get 'roles/' => 'worlds#add_remove_role', :as => :add_remove_role
+  post 'addrole/' => 'worlds#add_role', :as => :add_role
+  get 'logs/' => 'home#view_logs', :as => :view_logs
+  get 'logs/result/' => 'application#query', :as => :query
   get 'world/settings/' => 'worlds#world_settings', :as => :world_settings
   get 'world/settings/admin/' => 'worlds#admin_world_settings', :as => :admin_world_settings
   get 'home/createUOD' => 'application#createUOD'

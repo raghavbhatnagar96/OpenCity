@@ -53,20 +53,26 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def query(queryUser)
-      domain_uri = 'http://139.59.89.51:443/submitUsername/'+queryUser
-        
-          uri = URI(domain_uri)
-          req = Net::HTTP::Get.new(uri)
-
-          res = Net::HTTP.start(uri.host, uri.port) {|http|
-          http.request(req)}
-
-          $dataList = JSON.parse(res.body)["result"]["data"]
-          puts "get response --------- #{res.body}"
-
+  def query
+      if @my_role != "admin"
+        redirect_to root_path
+      end
+      queryUser = params[:queryUser]
+      if(queryUser != nil)
+        begin
+        puts "queryUser name --------- "+queryUser 
+        domain_uri = 'http://139.59.89.51:443/submitUsername/'+queryUser
+        uri = URI(domain_uri)
+        req = Net::HTTP::Get.new(uri)
+        res = Net::HTTP.start(uri.host, uri.port) {|http|
+        http.request(req)}
+        $dataList = JSON.parse(res.body)["result"]["data"]
+        puts "get response --------- #{res.body}"
         rescue => e
-          puts "failed #{e}"
+          
+        end
+      end
+      
   end
 
   private
@@ -78,6 +84,15 @@ class ApplicationController < ActionController::Base
 
   def UOD_params
     params.require(:world).permit(:title)
+  end
+
+  def set_UOD_admin
+    @user = current_user
+    uod = World.find(1)
+    myWorld = World.where(:title => @user[:email])
+    myWorld = myWorld[0]
+    data = JSON(uod.role_table)
+    @my_role = data[myWorld.id.to_s]
   end
  
 end
