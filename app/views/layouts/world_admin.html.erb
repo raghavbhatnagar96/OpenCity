@@ -297,7 +297,7 @@
                             <%= link_to '<i class="material-icons">book</i><span>Add/Remove Role</span>'.html_safe, {:controller => "worlds", :action => "add_remove_role", :id => @world.id } %>
                     </li>
                     <li>
-                            <%= link_to '<i class="material-icons">picture_in_picture</i><span>Add/Remove World</span>'.html_safe, my_worlds_path() %>
+                            <%= link_to '<i class="material-icons">picture_in_picture</i><span>Add/Remove World</span>'.html_safe, {:controller => "worlds", :action => "add_remove_world", :id => @world.id } %>
                     </li>
 
                    

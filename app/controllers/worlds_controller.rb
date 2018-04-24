@@ -1,7 +1,7 @@
 class WorldsController < ApplicationController
   before_action :set_world, only:[:show, :edit, :update, :destroy]
-  before_action :set_world_role, only:[:world_settings, :admin_world_settings, :add_remove_role, :add_role, :remove_role]
-  layout "world_admin", :only => [:admin_world_settings, :add_remove_role, :add_role]
+  before_action :set_world_role, only:[:world_settings, :admin_world_settings, :add_remove_role, :add_role, :remove_role, :change_privilege, :add_remove_world, :add_world, :remove_world]
+  layout "world_admin", :only => [:admin_world_settings, :add_remove_role, :add_remove_world]
 
   #use set_world_role before all actions where role of user in world is important
   
@@ -109,7 +109,63 @@ class WorldsController < ApplicationController
       format.json { head :no_content }
     end
   end
+#functions for adding/removing worlds to role table
 
+  def add_remove_world
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    worlds = World.all
+    @world_titles = []
+    data = JSON(@world.role_table)
+    # puts data["2"]
+    worlds.each do |thisWorld|
+      if data[thisWorld.id.to_s]
+        @world_titles.append(thisWorld.title)
+      end
+    end
+    p_table = JSON(@world.privilege_table)
+    @privileges = ["ALL", "WRITE", "EDIT", "READ"]
+    @roles = []
+    p_table.each do |role, privilege|
+        @roles.append(role)
+    end
+  end
+
+  def add_world
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    r_table = JSON(@world.role_table)
+    newWorld = World.where(:title => params[:world_title])
+    newWorld = newWorld[0] 
+    r_table[newWorld.id.to_s] = params[:role]
+    if @world.update(:role_table => r_table.to_json)
+      redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+    else
+      redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
+    end
+  end
+
+  def remove_world
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+  end
+
+#End role_table altering functions
+
+
+
+
+
+
+
+#functions for adding/removing roles and changing privilege of roles
+ 
   def add_remove_role
     @user = current_user
     if(@my_role != "admin")
@@ -147,12 +203,48 @@ class WorldsController < ApplicationController
     end
   end
 
+  def change_privilege
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    data = JSON(@world.privilege_table)
+    data[params[:role]] = params[:privilege]
+    if @world.update(:privilege_table => data.to_json)
+      redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+    else
+      redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
+    end
+  end
+
   def remove_role
     @user = current_user
     if(@my_role != "admin")
       redirect_to root_path
     end
+    if(params[:role]=="admin")
+      redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+    end
+    r_table = JSON(@world.role_table)
+    data = JSON(@world.privilege_table)
+    data.delete(params[:role])
+    r_table.each do |eachworld, role|
+        if role == params[:role]
+          role = params[:change_to]
+        end
+    end  
+    if @world.update(:privilege_table => data.to_json, :role_table => r_table.to_json)
+      redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+    else
+      redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
+    end
   end
+
+#End of Role Altering functions
+
+
+
+
 
 
   #World Settings for non admin

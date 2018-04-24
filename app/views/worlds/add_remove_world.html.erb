@@ -8,7 +8,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                     <div class="card">
                         <div class="header">
-                            <h2>Add Role</h2>
+                            <h2>Add World to world table</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -23,9 +23,9 @@
                             </ul>
                         </div>
                         <div class="body">
-                            <%= form_tag(add_role_path(:role, :privilege, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
-                         Role: <%= text_field_tag :role %>
-                         Privilege: <%= select_tag :privilege, options_for_select(@privileges) %>
+                            <%= form_tag(add_world_path(:world_title, :role, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
+                         World: <%= select_tag :world_title, options_for_select(@world_titles) %>
+                         Role: <%= select_tag :role, options_for_select(@roles) %>
 
             <p><%= submit_tag 'Submit', class: "btn btn-lg btn-primary"  %></p>
               <% end %>
@@ -38,7 +38,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                     <div class="card">
                         <div class="header">
-                            <h2>Remove Role</h2>
+                            <h2>Remove World</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -53,48 +53,12 @@
                             </ul>
                         </div>
                         <div class="body">
-                        <%normal_roles = @roles%>
-                         <%normal_roles.delete("admin")%>
-                            <%= form_tag(remove_role_path(:role,:change_to, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
-                         Role: <%= select_tag :role, options_for_select(normal_roles) %>
-                         <br>
-                         Change Role of worlds having this role to: <%= select_tag :change_to, options_for_select(normal_roles) %>
+                            <%= form_tag(remove_world_path(:world_title, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
+                         World: <%= select_tag :world_title, options_for_select(@world_titles) %>
                         <br>
                         
                          <p><%= submit_tag 'Submit', class: "btn btn-lg btn-primary"  %></p>
                          <%end%>
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Table -->
-
-                <!-- Table -->
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Change Privilege</h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <%= form_tag(change_privilege_path(:role, :privilege, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
-                        <%normal_roles = @roles%>
-                         <%normal_roles.delete("admin")%>
-                         Role: <%= select_tag :role, options_for_select(normal_roles) %>
-                         Privilege: <%= select_tag :privilege, options_for_select(@privileges) %>
-
-            <p><%= submit_tag 'Submit', class: "btn btn-lg btn-primary"  %></p>
-              <% end %>
                         </div>
                     </div>
                 </div>
