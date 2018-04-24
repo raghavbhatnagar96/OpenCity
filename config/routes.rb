@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get 'worldaddremove/' => 'worlds#add_remove_world', :as => :add_remove_world
   post 'worldadd/' => 'worlds#add_world', :as => :add_world
   post 'worldremove/' => 'worlds#remove_world', :as => :remove_world
+  post 'worldchange/' => 'worlds#change_world_role', :as => :change_world_role
   
   #routes for logs
   get 'logs/' => 'home#view_logs', :as => :view_logs

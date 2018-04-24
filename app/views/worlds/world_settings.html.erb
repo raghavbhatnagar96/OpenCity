@@ -23,38 +23,11 @@
                             </ul>
                         </div>
                         <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-hover dashboard-task-infos">
-                                    <thead>
-                                        <tr>
-                                            <th>World Title</th>
-                                            <th>World Role</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-	                                        <% data = JSON(@world.role_table) %>
-                                            <% data.each do |world_id, role| %>
-                                            <tr> 
-                                            <%thisworld=World.find(world_id)%>
-                                            <% each= User.find_by(:email => thisworld.title) %>
-                                                <td><td><%= thisworld.title %></td></td>
-	                                            <td><%= role %></td>
-	                                        </tr> 
-                                            <%end%>  
-                                        
-                                       
-
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h3> Your Role: <%=@my_role%> </h3> 
                         </div>
                     </div>
                 </div>
                 <!-- #END# Table -->
-
-               
-
-
         </div>
     </section>
 

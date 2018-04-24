@@ -24,11 +24,17 @@
                         </div>
                         <div class="body">
                             <%= form_tag(add_role_path(:role, :privilege, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
-                         Role: <%= text_field_tag :role %>
-                         Privilege: <%= select_tag :privilege, options_for_select(@privileges) %>
-
-            <p><%= submit_tag 'Submit', class: "btn btn-lg btn-primary"  %></p>
-              <% end %>
+                         <div class="field">
+                         <label>Role:  </label>
+                         <%= text_field_tag :role, "", class: "form-control", :required => true %>
+                         </div>
+                         <div class="field">
+                         <label>Privilege:  </label>
+                          <%= select_tag :privilege, options_for_select(@privileges), :required => true %>
+                        </div>
+                        <br>
+                        <p><%= submit_tag 'Submit', class: "btn btn-block btn-lg bg-pink waves-effect" , data: { confirm: "Are you sure?" } %></p>
+                        <% end %>
                         </div>
                     </div>
                 </div>
@@ -56,12 +62,19 @@
                         <%normal_roles = @roles%>
                          <%normal_roles.delete("admin")%>
                             <%= form_tag(remove_role_path(:role,:change_to, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
-                         Role: <%= select_tag :role, options_for_select(normal_roles) %>
+                         
+                         <div class="field">
+                         <label>Role:  </label>
+                         <%= select_tag :role, options_for_select(normal_roles), :required => true %>
+                         </div>
                          <br>
-                         Change Role of worlds having this role to: <%= select_tag :change_to, options_for_select(normal_roles) %>
+                         <div class="field">
+                         <label>Change Role of worlds having this role to: </label>
+                         <%= select_tag :change_to, options_for_select(normal_roles), :required => true %>
+                         </div>
+                         
                         <br>
-                        
-                         <p><%= submit_tag 'Submit', class: "btn btn-lg btn-primary"  %></p>
+                        <p><%= submit_tag 'Submit', class: "btn btn-block btn-lg bg-pink waves-effect" , data: { confirm: "Are you sure?" } %></p>
                          <%end%>
                         </div>
                     </div>
@@ -90,10 +103,16 @@
                             <%= form_tag(change_privilege_path(:role, :privilege, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
                         <%normal_roles = @roles%>
                          <%normal_roles.delete("admin")%>
-                         Role: <%= select_tag :role, options_for_select(normal_roles) %>
-                         Privilege: <%= select_tag :privilege, options_for_select(@privileges) %>
-
-            <p><%= submit_tag 'Submit', class: "btn btn-lg btn-primary"  %></p>
+                        <div class="field">
+                         <label>Role:  </label>
+                         <%= select_tag :role, options_for_select(normal_roles), :required => true %>
+                         </div>
+                         <div class="field">
+                         <label>Privilege: </label>
+                          <%= select_tag :privilege, options_for_select(@privileges), :required => true %>
+                          </div>
+                        <br>
+                        <p><%= submit_tag 'Submit', class: "btn btn-block btn-lg bg-pink waves-effect" , data: { confirm: "Are you sure?" } %></p>
               <% end %>
                         </div>
                     </div>
