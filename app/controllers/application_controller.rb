@@ -68,8 +68,10 @@ class ApplicationController < ActionController::Base
         res = Net::HTTP.start(uri.host, uri.port) {|http|
         http.request(req)}
         @dataList = JSON.parse(res.body)["result"]["data"]
+        puts @datalist
         puts "get response --------- #{res.body}"
-        rescue => e      
+        rescue => e 
+          # puts "aaaaaaaaaaaaaaa"     
         end
       end
       
