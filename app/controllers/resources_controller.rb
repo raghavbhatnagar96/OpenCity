@@ -36,7 +36,7 @@ class ResourcesController < ApplicationController
     @resource.date_published = Date.today
     respond_to do |format|
       if @resource.save
-        invoke("Resource created: " + @resource.title, @user[:email], "admin", worldID)
+        invoke("Resource created: " + @resource.title, @user[:email], "admin", worldID.to_s)
         # puts("Resource created: " + @resource.title, @user[:email], "admin", worldID)
         format.html { redirect_to :root, notice: 'Resource was successfully created.' }
         format.json { render :show, status: :created, location: @resource }

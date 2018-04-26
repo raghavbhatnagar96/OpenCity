@@ -78,7 +78,7 @@ class WorldsController < ApplicationController
     email = @user[:email]
     respond_to do |format|
       if @world.save 
-        invoke("Create World: " + @world.title, email, "admin", worldID)
+        invoke("Create World: " + @world.title, email, "admin", worldID.to_s.to_s)
         format.html { redirect_to @world, notice: 'World was successfully created.' }
         format.json { render :show, status: :created, location: @world }
       else
@@ -131,7 +131,7 @@ class WorldsController < ApplicationController
     newLocation = World.where(:title => params[:world_title])
     newLocation = newLocation[0]
     if @world.update(:location_id => newLocation.id)
-      invoke("Changed location of "+@world.title+" from"+oldLocation.to_s+ "to "+newLocation.to_s, @user.email, "admin", @world.id)
+      invoke("Changed location of "+@world.title+" from " +oldLocation.to_s+ " to "+newLocation.id.to_s, @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -148,6 +148,8 @@ class WorldsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 #functions for adding/removing worlds to role table
 
   def add_remove_world
@@ -186,7 +188,7 @@ class WorldsController < ApplicationController
     newWorld = newWorld[0] 
     r_table[newWorld.id.to_s] = params[:role]
     if @world.update(:role_table => r_table.to_json)
-      invoke("Added world to Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id)
+      invoke("Added world to Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -210,7 +212,7 @@ class WorldsController < ApplicationController
     if r_table[newWorld.id.to_s]!="admin"
       r_table.delete(newWorld.id.to_s)
       if @world.update(:role_table => r_table.to_json)
-        invoke("Removed world from Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id)
+        invoke("Removed world from Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id.to_s)
         redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
       else
         redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -220,7 +222,7 @@ class WorldsController < ApplicationController
     elsif adminCount > 1
       r_table.delete(newWorld.id.to_s)
       if @world.update(:role_table => r_table.to_json)
-        invoke("Removed world from Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id)
+        invoke("Removed world from Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id.to_s)
         redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
       else
         redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -247,7 +249,7 @@ class WorldsController < ApplicationController
     if r_table[newWorld.id.to_s]!="admin"
       r_table[newWorld.id.to_s] = params[:role]
       if @world.update(:role_table => r_table.to_json)
-        invoke("Change world: " + newWorld.id.to_s + " role to: " + params[:role], @user.email, "admin", @world.id)
+        invoke("Change world: " + newWorld.id.to_s + " role to: " + params[:role], @user.email, "admin", @world.id.to_s)
         redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
       else
         redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -255,7 +257,7 @@ class WorldsController < ApplicationController
     elsif adminCount > 1
       r_table[newWorld.id.to_s] = params[:role]
       if @world.update(:role_table => r_table.to_json)
-        invoke("Change world: " + newWorld.id.to_s + " role to: " + params[:role], @user.email, "admin", @world.id)
+        invoke("Change world: " + newWorld.id.to_s + " role to: " + params[:role], @user.email, "admin", @world.id.to_s)
         redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
       else
         redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -307,7 +309,7 @@ class WorldsController < ApplicationController
     data = JSON(@world.privilege_table)
     data[params[:role]] = params[:privilege]
     if @world.update(:privilege_table => data.to_json)
-      invoke("Added role: " + params[:role], @user.email, "admin", @world.id)
+      invoke("Added role: " + params[:role], @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -322,7 +324,7 @@ class WorldsController < ApplicationController
     data = JSON(@world.privilege_table)
     data[params[:role]] = params[:privilege]
     if @world.update(:privilege_table => data.to_json)
-      invoke("Change privilege of role: " + params[:role] + "to " + params[:privilege], @user.email, "admin", @world.id)
+      invoke("Change privilege of role: " + params[:role] + "to " + params[:privilege], @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -346,7 +348,7 @@ class WorldsController < ApplicationController
         end
     end  
     if @world.update(:privilege_table => data.to_json, :role_table => r_table.to_json)
-      invoke("Remove role: " + params[:role], @user.email, "admin", @world.id)
+      invoke("Remove role: " + params[:role], @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id

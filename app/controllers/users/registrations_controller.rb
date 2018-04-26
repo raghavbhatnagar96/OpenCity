@@ -9,14 +9,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @world = World.new()
       @world.title=current_user[:email]
       lastworld = World.last
-      lastworld = lastworld.id + 1
-      data = {lastworld=> "admin"}
+      newWorld = newWorld.id + 1
+      data = {newWorld=> "admin"}
       @world.role_table = data.to_json
-      @world.location_id = lastworld
+      @world.location_id = newWorld
       data2 = {"admin"=> "ALL"}
       @world.privilege_table = data2.to_json
       if @world.save
-        invoke("User created: " + @user[:email], @user[:email], "admin", 1)
+        invoke("User created: " + @user[:email], @user[:email], "admin", newWorld.to_s)
       else
       end
     else

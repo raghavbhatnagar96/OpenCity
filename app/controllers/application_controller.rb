@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :first_user, :except => [:createUOD, :create_UOD]
   before_action :authenticate_user!, :except => [:createUOD, :create_UOD]
   layout "auth", :only => [:createUOD, :create_UOD]
+  # layout "world_admin", :only => [:query]
 
   def create_UOD
     unless World.exists?
@@ -16,7 +17,7 @@ class ApplicationController < ActionController::Base
       @world[:title] = @world1[:title]
       respond_to do |format|
         if @world.save
-          invoke("Create UOD: " + @world1[:title], "adminEmail", "admin", 1)
+          invoke("Create UOD: " + @world1[:title], "adminEmail", "admin", 1.to_s)
           format.html { redirect_to :root, notice: 'World was successfully created.' }
           format.json { render :show, status: :created, location: @world }
         else
@@ -55,9 +56,11 @@ class ApplicationController < ActionController::Base
 
 
   def query
-      if @my_role != "admin"
-        redirect_to root_path
-      end
+      @user = current_user
+      @world = World.find(1)
+      # if @my_role != "admin"
+      #   redirect_to root_path
+      # end
       queryUser = params[:queryUser]
       if(queryUser != nil)
         begin
@@ -71,10 +74,9 @@ class ApplicationController < ActionController::Base
         puts @datalist
         puts "get response --------- #{res.body}"
         rescue => e 
-          # puts "aaaaaaaaaaaaaaa"     
+          puts "Failed"    
         end
-      end
-      
+      end     
   end
 
   private
