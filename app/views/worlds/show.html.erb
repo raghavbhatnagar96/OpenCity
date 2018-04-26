@@ -24,6 +24,7 @@
             <label><%= @world.title %></label></br>
             <label><b> Created on: </b></label>
             <label><%= @world.created_at %></label></br>
+            <label>Current location: <%= World.find(@world.location_id).title %></label><br>
   			<label><%= link_to 'Edit', edit_world_path(@world), class: "btn btn-block btn-lg bg-pink waves-effect" %></label>  
   			<label><%= link_to 'Back', my_worlds_path, class: "btn btn-block btn-lg bg-pink waves-effect" %></label>
         <label><%= link_to 'Settings', world_settings_path(:id => @world.id), class: "btn btn-block btn-lg bg-pink waves-effect"%></label>

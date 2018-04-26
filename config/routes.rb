@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   post 'privilege/' => 'worlds#change_privilege', :as => :change_privilege
 
   #route for adding world to role_table
+  get 'changelocation/' => 'worlds#change_location_landing', :as => :change_location_landing
+  post 'location/' => 'worlds#change_location', :as => :change_location
   get 'worldaddremove/' => 'worlds#add_remove_world', :as => :add_remove_world
   post 'worldadd/' => 'worlds#add_world', :as => :add_world
   post 'worldremove/' => 'worlds#remove_world', :as => :remove_world

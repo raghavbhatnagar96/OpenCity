@@ -12,6 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       lastworld = lastworld.id + 1
       data = {lastworld=> "admin"}
       @world.role_table = data.to_json
+      @world.location_id = lastworld
       data2 = {"admin"=> "ALL"}
       @world.privilege_table = data2.to_json
       if @world.save

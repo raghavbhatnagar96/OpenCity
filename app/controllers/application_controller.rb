@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
       data1 = {"admin" => "ALL"}
       @world.privilege_table = data1.to_json
       @world1 = params[:world]
+      @world.location_id = 1
       @world[:title] = @world1[:title]
       respond_to do |format|
         if @world.save

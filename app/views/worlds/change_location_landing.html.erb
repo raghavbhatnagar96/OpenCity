@@ -1,0 +1,47 @@
+    <div class="container-fluid">
+            <div class="block-header">
+                <h2>World Settings</h2>
+            </div>
+
+            <div class="row clearfix">
+                <!-- Table -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Change Location of <%= @world.title %>:</h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="field">
+                            <label>Current location: <%= World.find(@world.location_id).title %></label>
+
+                            <%= form_tag(change_location_path(:world_title, :id => @world.id), {:method => :post, :class => "form form-horizontal"}) do %>
+                         <div class="field">
+                         <label>Change location to: </label>
+                        <%= select_tag :world_title, options_for_select(@myWorlds), :required => true %>
+                        </div>
+
+                        <br>
+                        <p><%= submit_tag 'Submit', class: "btn btn-block btn-lg bg-pink waves-effect" , data: { confirm: "Are you sure?" } %></p>
+              <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Table -->
+            </div>
+    </section>
+
+
+

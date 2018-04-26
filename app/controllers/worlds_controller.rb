@@ -1,7 +1,7 @@
 class WorldsController < ApplicationController
   before_action :set_world, only:[:show, :edit, :update, :destroy]
-  before_action :set_world_role, only:[:world_settings, :admin_world_settings, :add_remove_role, :add_role, :remove_role, :change_privilege, :add_remove_world, :add_world, :remove_world, :change_world_role]
-  layout "world_admin", :only => [:admin_world_settings, :add_remove_role, :add_remove_world]
+  before_action :set_world_role, only:[:world_settings, :admin_world_settings, :add_remove_role, :add_role, :remove_role, :change_privilege, :add_remove_world, :add_world, :remove_world, :change_world_role, :change_location_landing, :change_location]
+  layout "world_admin", :only => [:admin_world_settings, :add_remove_role, :add_remove_world, :change_location_landing]
 
   #use set_world_role before all actions where role of user in world is important
   
@@ -46,17 +46,13 @@ class WorldsController < ApplicationController
   def my_worlds
     @user = current_user
     @worlds = World.all
-    # puts @worlds
     myWorld = World.where(:title => @user[:email])
-    worldID = myWorld[0].id
-    # puts worldID
+    @myworldID = myWorld[0].id.to_i
     @myWorlds = []
     @worlds.each do |world|
-      # puts world
       data = JSON(world.role_table)
-      # puts data
       data.each do |world_id, role|
-        if world_id.to_i == worldID.to_i
+        if world_id.to_i == @myworldID
           @myWorlds.append(world)
         end
       end
@@ -76,6 +72,7 @@ class WorldsController < ApplicationController
     worldID = @myWorld[0].id 
     data = {worldID=> "admin"}
     @world.role_table = data.to_json
+    @world.location_id = worldID
     data2 = {"admin"=> "ALL"}
     @world.privilege_table = data2.to_json
     email = @user[:email]
@@ -103,6 +100,41 @@ class WorldsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @world.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def change_location_landing
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    @worlds = World.all
+    myWorld = World.where(:title => @user[:email])
+    worldID = myWorld[0].id
+    @myWorlds = []
+    @worlds.each do |world|
+      data = JSON(world.role_table)
+      data.each do |world_id, role|
+        if world_id.to_i == worldID.to_i && role == "admin"
+          @myWorlds.append(world.title)
+        end
+      end
+    end
+  end
+
+  def change_location
+    @user = current_user
+    if(@my_role != "admin")
+      redirect_to root_path
+    end
+    oldLocation = @world.location_id
+    newLocation = World.where(:title => params[:world_title])
+    newLocation = newLocation[0]
+    if @world.update(:location_id => newLocation.id)
+      invoke("Changed location of "+@world.title+" from"+oldLocation.to_s+ "to "+newLocation.to_s, @user.email, "admin", @world.id)
+      redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+    else
+      redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
     end
   end
 
@@ -168,11 +200,27 @@ class WorldsController < ApplicationController
     end
     r_table = JSON(@world.role_table)
     newWorld = World.where(:title => params[:world_title])
-    newWorld = newWorld[0] 
+    newWorld = newWorld[0]
+    adminCount = 0
+    r_table.each do |eachworld, role|
+        if role == "admin"
+          adminCount = adminCount+1
+        end
+    end 
     if r_table[newWorld.id.to_s]!="admin"
       r_table.delete(newWorld.id.to_s)
       if @world.update(:role_table => r_table.to_json)
-        invoke("Removed world to Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id)
+        invoke("Removed world from Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id)
+        redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
+      else
+        redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
+      end
+
+    #only remove admin if one admin is left
+    elsif adminCount > 1
+      r_table.delete(newWorld.id.to_s)
+      if @world.update(:role_table => r_table.to_json)
+        invoke("Removed world from Role Table: " + newWorld.id.to_s, @user.email, "admin", @world.id)
         redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
       else
         redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -294,7 +342,7 @@ class WorldsController < ApplicationController
     data.delete(params[:role])
     r_table.each do |eachworld, role|
         if role == params[:role]
-          role = params[:change_to]
+          r_table[eachworld] = params[:change_to]
         end
     end  
     if @world.update(:privilege_table => data.to_json, :role_table => r_table.to_json)

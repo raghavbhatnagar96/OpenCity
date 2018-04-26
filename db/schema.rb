@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326152141) do
+ActiveRecord::Schema.define(version: 20180426014809) do
 
   create_table "resources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date "date_published"
@@ -51,6 +51,10 @@ ActiveRecord::Schema.define(version: 20180326152141) do
     t.datetime "updated_at", null: false
     t.json "role_table"
     t.json "privilege_table"
+    t.bigint "world_id"
+    t.bigint "location_id"
+    t.index ["location_id"], name: "index_worlds_on_location_id"
+    t.index ["world_id"], name: "index_worlds_on_world_id"
   end
 
 end

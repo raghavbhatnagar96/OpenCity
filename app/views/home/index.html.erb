@@ -136,16 +136,19 @@
                                             <th>World Title</th>
                                             <th>User Role</th>
                                             <th>World created on</th>
+                                            <th>Location</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% @myWorlds.each do |world| %>
                                             <% data = JSON(world.role_table) %>
-                                            <% data.each do |user_id, role| %>
-                                            <tr>                          
+                                            <% data.each do |world_id, role| %>
+                                            <tr>                      <%if world_id==@myworldID.to_s%>    
                                                 <td><%= world.title %></td>
                                                 <td><%= role %></td>
                                                 <td><%= world.created_at %></td>
+                                                <td><%= World.find(world.location_id).title %></td>
+                                                <%end%>
                                             </tr>
                                             <% end %>    
                                         <% end %>

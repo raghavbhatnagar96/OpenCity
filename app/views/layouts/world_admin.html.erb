@@ -291,14 +291,25 @@
                 <ul class="list">
                     <li class="header">Welcome Admin</li>
                      <li>
-                            <%= link_to '<i class="material-icons">home</i><span>Home</span>'.html_safe, root_path() %>
+                        <%= link_to '<i class="material-icons">home</i><span>Home</span>'.html_safe, root_path() %>
                     </li>
                     <li> 
-                            <%= link_to '<i class="material-icons">book</i><span>Add/Remove Role</span>'.html_safe, {:controller => "worlds", :action => "add_remove_role", :id => @world.id } %>
+                        <%= link_to '<i class="material-icons">settings_applications</i><span>Settings</span>'.html_safe, {:controller => "worlds", :action => "world_settings", :id => @world.id } %>
+                    </li>
+                    <li> 
+                        <%= link_to '<i class="material-icons">book</i><span>Add/Remove Role</span>'.html_safe, {:controller => "worlds", :action => "add_remove_role", :id => @world.id } %>
                     </li>
                     <li>
-                            <%= link_to '<i class="material-icons">picture_in_picture</i><span>Add/Remove World</span>'.html_safe, {:controller => "worlds", :action => "add_remove_world", :id => @world.id } %>
+                        <%= link_to '<i class="material-icons">picture_in_picture</i><span>Add/Remove World</span>'.html_safe, {:controller => "worlds", :action => "add_remove_world", :id => @world.id } %>
                     </li>
+                    <li>
+                        <%= link_to '<i class="material-icons">edit_location</i><span>Change Location</span>'.html_safe, {:controller => "worlds", :action => "change_location_landing", :id => @world.id } %>
+                    </li>
+                    <%if @world.id == 1%>
+                    <li>
+                         <%= link_to '<i class="material-icons">assessment</i><span>View Logs</span>'.html_safe, {:controller => "home", :action => "view_logs", :id => @world.id } %>
+                    </li>
+                    <%end%>
 
                    
                 </ul>
