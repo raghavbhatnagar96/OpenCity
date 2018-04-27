@@ -309,7 +309,7 @@ class WorldsController < ApplicationController
     data = JSON(@world.privilege_table)
     data[params[:role]] = params[:privilege]
     if @world.update(:privilege_table => data.to_json)
-      invoke("Added role: " + params[:role], @user.email, "admin", @world.id.to_s)
+      invoke("Added role: " + params[:role] + " with privilege: " + params[:privilege], @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id
@@ -348,7 +348,7 @@ class WorldsController < ApplicationController
         end
     end  
     if @world.update(:privilege_table => data.to_json, :role_table => r_table.to_json)
-      invoke("Remove role: " + params[:role], @user.email, "admin", @world.id.to_s)
+      invoke("Remove role: " + params[:role] + " change to: " + params[:change_to], @user.email, "admin", @world.id.to_s)
       redirect_to controller: 'worlds', action: 'admin_world_settings', id: @world.id
     else
       redirect_to admin_world_settings_path, notice: 'Role was Not added successfully.', id: @world.id

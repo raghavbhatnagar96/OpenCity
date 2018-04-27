@@ -1,6 +1,6 @@
 	<div class="container-fluid">
       <div class="block-header">
-          <h2>Viewing World</h2>
+          <h2>Viewing Logs</h2>
       </div>
 
       <div class="row clearfix">
@@ -12,7 +12,7 @@
             <div style="padding: 2%">
             <%= form_tag(query_path(:queryUser), {:method => :get, :class => "form form-horizontal"}) do %>
                 <div class="field">
-                <label>Username: </label>
+                <label>Email ID: </label>
                 <%= text_field_tag :queryUser, "", class: "form-control", :required => true %>
                 <br>
                 </div>
