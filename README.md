@@ -31,14 +31,17 @@ sudo pip install docker-compose
 docker-compose build
 docker-compose run web bundle install
 # This will take a while
+# create database and run migration
 docker-compose run app rake db:create
 docker-compose run app rake db:migrate
 ```
 
-Now your ruby on rails installation is done. 
+Now your OpenCity applicatio installation is complete 
 
-Please note that you don't have to use 'rails s' command to run the server. Once your db create and migrate is done just do
+Please note that you don't have to use 'rails s' command to run the server. Once your db has been intitialized, simply run
 ```sh
 docker-compose up 
 ```
-to visit your development web server. GO to localhost:3000 and you are done. 
+To visit your development web server. GO to localhost:3000. You will be asked to create a UOD. 
+
+To close the server, simple press Ctrl + c
