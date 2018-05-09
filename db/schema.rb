@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180426014809) do
   end
 
   create_table "worlds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "title"
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "role_table"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180426014809) do
     t.bigint "world_id"
     t.bigint "location_id"
     t.index ["location_id"], name: "index_worlds_on_location_id"
+    t.index ["title"], name: "index_worlds_on_title", unique: true
     t.index ["world_id"], name: "index_worlds_on_world_id"
   end
 

@@ -74,16 +74,25 @@ class WorldsController < ApplicationController
     @world.role_table = data.to_json
     @world.location_id = worldID
     data2 = {"admin"=> "ALL"}
-    @world.privilege_table = data2.to_json
-    email = @user[:email]
-    respond_to do |format|
-      if @world.save 
-        invoke("Create World: " + @world.title, email, "admin", worldID.to_s.to_s)
-        format.html { redirect_to @world, notice: 'World was successfully created.' }
-        format.json { render :show, status: :created, location: @world }
-      else
-        format.html { render :new }
-        format.json { render json: @world.errors, status: :unprocessable_entity }
+    titles = World.where(:title => world_params[:title])
+    # puts titles[0].title
+
+    #unique name
+    if !titles.empty?
+      flash[:notice] = 'Try A different World Name'
+      redirect_to new_world_path
+    else
+      @world.privilege_table = data2.to_json
+      email = @user[:email]
+      respond_to do |format|
+        if @world.save 
+          invoke("Create World: " + @world.title, email, "admin", worldID.to_s.to_s)
+          format.html { redirect_to @world, notice: 'World was successfully created.' }
+          format.json { render :show, status: :created, location: @world }
+        else
+          format.html { render :new }
+          format.json { render json: @world.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

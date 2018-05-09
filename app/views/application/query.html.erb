@@ -23,8 +23,9 @@
                             </ul>
                         </div>
                         <div class="body">
+                        <% if @dataList != nil%>
                             <div class="table-responsive">
-                                <table class="table table-hover dashboard-task-infos">
+                                <table class="table table-hover dashboard-task-infos">                                    
                                     <thead>
                                                 <tr>
                                                     <th>Timestamp</th>
@@ -34,14 +35,18 @@
                                                 </tr>
                                             </thead>
                                     <tbody>
+                                        
                                          <% @dataList.each do |data| %>
 	                                        <tr>                          
 	                                           <td><%= data["Timestamp"] %></td>
-                                                <td><%= World.find(data["WorldID"].to_i %>).title</td>
+                                                <td><%= World.find(data["WorldID"].to_i).title%></td>
                                                 <td><%= data["Role"] %></td>
                                                 <td><%= data["Action"] %></td>
 	                                        </tr>
-	                                    	<% end %>    
+	                                    	<% end %>
+                                        <% else %>
+                                        No logs available
+                                        <%end%>    
  
                                         
                                        
